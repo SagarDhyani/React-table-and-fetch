@@ -1,0 +1,16 @@
+.footer {
+    width: 100%;
+    /* margin-top:100px; */
+    position: relative;
+    height: 60px;
+    margin: auto;
+    background-color: rgb(135, 31, 120);
+  }
+  
+  span{
+  
+      color: white;
+      font-size: 12px;
+      padding-top: 20px;
+  }
+  
