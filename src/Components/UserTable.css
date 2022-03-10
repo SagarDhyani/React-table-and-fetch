@@ -43,6 +43,32 @@
     box-shadow: 5px 0px 10px rgb(216, 213, 213);
     font-weight: 200;
   }
+
+  .Row{
+
+    color: rgb(173, 65, 159);
+    transform: scale(0.8);
+    width: 8px;
+    height: 2px;
+    
+   
+  }
+
+  .Button{
+    background-color: inherit;
+    width: 50px;
+    border: 0px white;
+    margin: auto;
+
+  }
+
+  .sortIcon{
+
+    width: 30px;
+    height: 30px;
+    color: rgb(173, 65, 159);
+    margin-left: 5px;
+  }
   
   @media (max-width: 768px) {
     .container {

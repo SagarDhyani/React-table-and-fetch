@@ -1,22 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getUsers = createAsyncThunk(
-  "users/getUsers",
-  async () => {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/users"
-    ).then((res) => res.json());
+export const getUsers = createAsyncThunk("users/getUsers", async () => {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/users"
+  ).then((res) => res.json());
 
-    return response
-  }
- 
-);
+  return response;
+});
 
 const usersSlice = createSlice({
   name: "user",
   initialState: {
     users: [],
     status: null,
+  },
+
+  reducers: {
+    deleteRow: (state, action) => {
+      console.log("action", action.payload.id);
+
+    state.users =   state.users.filter((data) => {
+        return data.id !== action.payload.id;
+      });
+    },
   },
 
   extraReducers: {
@@ -34,5 +40,7 @@ const usersSlice = createSlice({
     },
   },
 });
+
+export const { deleteRow } = usersSlice.actions;
 
 export default usersSlice.reducer;

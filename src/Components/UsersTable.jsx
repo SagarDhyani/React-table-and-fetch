@@ -1,8 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../myRedux/userSlice";
-import { useTable } from "react-table";
+import { deleteRow, getUsers } from "../myRedux/userSlice";
+import { useTable, useSortBy } from "react-table";
+
 import "./UserTable.css";
+import { Delete, Edit, Sort } from "@material-ui/icons";
+import { SortAlphaAsc } from "styled-icons/icomoon";
+import { SortAlphabetically } from "styled-icons/typicons";
+import { SortAscending, SortDescending } from "styled-icons/heroicons-outline";
+import { SortDesc } from "styled-icons/octicons";
+import { Header } from "styled-icons/open-iconic";
 
 export const UsersTable = () => {
   // const columns = useMemo(() => COLUMNS, []);
@@ -10,16 +17,17 @@ export const UsersTable = () => {
   const myData = useSelector((store) => store.users);
   const dispatch = useDispatch();
   const data = useMemo(() => myData);
+  // const columns = useMemo(() => COLUMNS, []);
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
   const COLUMNS = [
-    {
-      Header: "Id",
-      accessor: "id",
-    },
+    // {
+    //   Header: "Id",
+    //   accessor: "id",
+    // },
 
     {
       Header: "Name",
@@ -52,28 +60,48 @@ export const UsersTable = () => {
     },
 
     {
-      Header: "Delete Items",
+      Header: "Delete Rows",
 
-      // accessor: (str) => <button onClick = {(data)=>{
-      //   console.log("kas", da)
-      // }}>Delete</button>,
-
-     
-     
+      accessor: (str) => (
+        <button
+          className="Button"
+          onClick={() => {
+            dispatch(deleteRow(str));
+          }}
+        >
+          <Delete className="Row" />
+        </button>
+      ),
     },
+
+    // {
+    //   Header: "Edit",
+
+    //   accessor: (str) => (
+    //     <button className="Button" onClick = {()=>{
+
+    //     }}>
+    //       <Edit className="Row" />
+    //     </button>
+    //   ),
+    // },
   ];
 
   // const myData = useSelector((store) => store.users);
 
   const columns = useMemo(() => COLUMNS, []);
+
   // const data = useMemo(() => myData);
 
-  const tableInstance = useTable({
-    columns,
-    data,
-  });
+  const tableInstance = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
 
-  console.log("tableInstance:", tableInstance);
+  // console.log("tableInstance:", tableInstance);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
@@ -84,7 +112,20 @@ export const UsersTable = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <SortAscending className="sortIcon" />
+                    ) : (
+                      <SortDescending className="sortIcon" />
+                    )
+                  ) : (
+                    ""
+                    // <Sort className="sortIcon" />
+                  )}
+                </th>
               ))}
             </tr>
           ))}

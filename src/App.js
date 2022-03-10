@@ -10,13 +10,13 @@ import { UsersTable } from "./Components/UsersTable";
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUsers());
+  // }, []);
 
   const data = useSelector((store) => store.users);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="App">
